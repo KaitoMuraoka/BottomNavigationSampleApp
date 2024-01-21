@@ -1,13 +1,19 @@
 package com.example.bottomnavigationsampleapp
 
 import android.os.Bundle
+import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
+import androidx.navigation.findNavController
+import androidx.navigation.fragment.NavHostFragment
+import androidx.navigation.ui.setupWithNavController
 import com.example.bottomnavigationsampleapp.databinding.ActivityMainBinding
 import com.example.bottomnavigationsampleapp.ui.dashboard.DashboardFragment
 import com.example.bottomnavigationsampleapp.ui.home.HomeFragment
 import com.example.bottomnavigationsampleapp.ui.notifications.NotificationsFragment
+import com.google.android.material.bottomnavigation.BottomNavigationView
+import java.lang.IllegalStateException
 
 class MainActivity : AppCompatActivity() {
 
@@ -19,11 +25,12 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-//        val navView: BottomNavigationView = binding.navView
-//        val navController = findNavController(R.id.nav_host_fragment_activity_main)
-//        navView.setupWithNavController(navController)
-        // ↑があると動く。
-        // onOptionsItemSelectedないに↑のコードが必要？
+        val navHostFragment = supportFragmentManager.findFragmentById(R.id.nav_host_fragment_activity_main) as NavHostFragment
+        val navController = navHostFragment.navController
+        val navView: BottomNavigationView = binding.navView
+        navView.setupWithNavController(navController)
+//         ↑があると動く。
+//         onOptionsItemSelectedないに↑のコードが必要？
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
