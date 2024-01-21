@@ -6,6 +6,7 @@ import android.view.Menu
 import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.findNavController
+import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.setupWithNavController
 import com.example.bottomnavigationsampleapp.databinding.ActivityMainBinding
 import com.example.bottomnavigationsampleapp.ui.dashboard.DashboardFragment
@@ -24,31 +25,10 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        val navHostFragment = supportFragmentManager.findFragmentById(R.id.nav_host_fragment_activity_main) as NavHostFragment
+        val navController = navHostFragment.navController
         val navView: BottomNavigationView = binding.navView
-        val fragmentManager = supportFragmentManager
-        navView.setOnItemSelectedListener {
-            Log.d("MainActivity", "onCreate: ${it.itemId}")
-            val fragment = when (it.itemId) {
-                R.id.navigation_home -> {
-                    HomeFragment()
-                }
-                R.id.navigation_dashboard -> {
-                    DashboardFragment()
-                }
-                R.id.navigation_notifications -> {
-                    NotificationsFragment()
-                }
-                else -> {
-                    throw IllegalStateException("Unknown itemId: ${it.itemId}")
-                }
-            }
-            fragmentManager.beginTransaction()
-                .replace(binding.navHostFragmentActivityMain.id, fragment)
-                .commit()
-            true
-        }
-//        val navController = findNavController(R.id.nav_host_fragment_activity_main)
-//        navView.setupWithNavController(navController)
+        navView.setupWithNavController(navController)
 //         ↑があると動く。
 //         onOptionsItemSelectedないに↑のコードが必要？
     }
